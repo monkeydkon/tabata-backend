@@ -14,10 +14,13 @@ exports.getTabata = (req, res, next) => {
             return user
         })
         .then(result => {
-        //    const filtered =
-            //result.findOne({tabata._id: tabata});
-            // return result.findById(result.tabatas._id === tabataId);
-            res.json({take: result.tabatas});    
+             const tabata = result.tabatas.find(tabata => tabata._id == tabataId);
+             if(!tabata){
+                const error = new Error('Tabata doesnt exist');
+                error.statusCode = 500;
+                throw error;
+             }
+             res.status(200).json({tabata:tabata});
         })
         .catch(err => {
             if (!err.statusCode) {
