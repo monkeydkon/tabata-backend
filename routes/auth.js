@@ -6,23 +6,12 @@ const User = require('../models/user');
 
 const authController = require('../controllers/auth');
 
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-
-
-passport.use(new GoogleStrategy({
-    clientID: '918021882776-fu8hr3q5ld81t1dlv1pd8en7ht8hu3t6.apps.googleusercontent.com',
-    clientSecret: ' HSogVkVFdTdKWAhbO3t6Yz7F ',
-    callbackURL: "http://www.example.com/auth/google/callback"
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
-  }
-));
-
 const router = express.Router();
+
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
+
+
 
 router.put('/signup',
  [
@@ -48,13 +37,15 @@ authController.signup);
 router.post('/login', authController.login);
 
 router.get('/google',
-  passport.authenticate('google', { scope: ['profile'] }));
+  passport.authenticate('google', { scope: 
+      [ 'https://www.googleapis.com/auth/plus.login',
+      , 'https://www.googleapis.com/auth/plus.profile.emails.read' ] }
+));
 
 router.get('/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
+    passport.authenticate( 'google', { 
+        successRedirect: '/auth/google/success',
+        failureRedirect: '/auth/google/failure'
+}));
 
 module.exports = router;

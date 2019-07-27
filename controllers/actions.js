@@ -131,6 +131,13 @@ exports.deleteTabata = (req, res, next) => {
 };
 
 exports.updateTabata = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const error = new Error('Validation failed');
+        error.statusCode = 422;
+        errors.data = errors.array();
+        throw error;
+    }
     const userId = req.userId;
     const tabataId = req.params.tabataId;
     const name = req.body.name;

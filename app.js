@@ -3,11 +3,19 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const url = require('./variables/variables');
+const User = require('./models/user');
 
 const authRoutes = require('./routes/auth');
 const actionsRoutes = require('./routes/actions');
 
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
+
+
+
 const app = express();
+
+
 
 app.use(bodyParser.json());
 
@@ -18,8 +26,29 @@ app.use((req, res, next) => {
     next();
 });
 
+
+
+passport.use(new GoogleStrategy({
+    clientID: '918021882776-fu8hr3q5ld81t1dlv1pd8en7ht8hu3t6.apps.googleusercontent.com',
+    clientSecret: 'HSogVkVFdTdKWAhbO3t6Yz7F',
+    callbackURL: "http://localhost:3000/auth/google/callback",
+    passReqToCallback: true
+},
+    function (request, accessToken, refreshToken, profile, done) {
+        // User.findOrCreate({ googleId: profile.id }, function (err, user) {
+        //     return done(err, user);
+        // });
+
+        console.log(profile.id);
+    }
+));
+
+app.use( passport.initialize());
+app.use( passport.session());
+
+
 app.use('/auth', authRoutes);
-app.use('/actions', actionsRoutes)
+app.use('/actions', actionsRoutes);
 
 app.use((error, req, res, next) => {
     console.log(error);
