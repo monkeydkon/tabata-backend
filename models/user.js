@@ -18,15 +18,19 @@ const userSchema = new Schema({
             },
             details: 
                 {
-                    active: {
+                    work: {
                         type: Number,
                         required: true
                     },
-                    passive: {
+                    rest: {
                         type: Number,
                         required: true
                     },
                     rounds: {
+                        type: Number,
+                        required: true
+                    },
+                    prepare: {
                         type: Number,
                         required: true
                     }
