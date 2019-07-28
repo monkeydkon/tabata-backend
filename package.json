@@ -3,18 +3,20 @@
   "version": "1.0.0",
   "description": "back-end for tabata timer",
   "main": "index.js",
-  "engines":{
+  "engines": {
     "node": "10.16.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=production MONGO_USER=monkeydkon MONGO_PASSWORD=gamotonzaxa MONGO_DEFAULT_DATABASE=tabata GOOGLE_CLIENT_ID=918021882776-fu8hr3q5ld81t1dlv1pd8en7ht8hu3t6.apps.googleusercontent.com GOOGLE_CLIENT_SECRET=yyVXb1UunZ9j0mcpLx8FYz8fm node app.js",
+    "start": "NODE_ENV=production MONGO_USER=monkeydkon MONGO_PASSWORD=gamotonzaxa MONGO_DEFAULT_DATABASE=tabata GOOGLE_CLIENT_ID=918021882776-fu8hr3q5ld81t1dlv1pd8en7ht8hu3t6.apps.googleusercontent.com GOOGLE_CLIENT_SECRET=LBCef5d7K48XGB7TEEDF7SBK nodemon app.js",
     "start-server": "node app.js",
     "start:dev": "nodemon app.js"
   },
   "author": "giorgos konsoulakis",
   "license": "ISC",
   "dependencies": {
+    "@feathersjs/express": "^1.3.1",
+    "@feathersjs/feathers": "^3.3.1",
     "bcrypt": "^3.0.6",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -23,6 +25,7 @@
     "express-validator": "^6.1.1",
     "googleapis": "^41.0.1",
     "helmet": "^3.20.0",
+    "https": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.5",
     "morgan": "^1.9.1",

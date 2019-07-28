@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const passport = require('passport');
+require('./passport/passport-setup');
 const compression = require('compression');
 const helmet = require('helmet');
 

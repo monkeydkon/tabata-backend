@@ -11,8 +11,6 @@ const router = express.Router();
 const isAuth = require('../middleware/is-auth');
 
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
-
 
 
 router.put('/signup',

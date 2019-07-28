@@ -3,6 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
+
 passport.serializeUser((user,done) => {
     done(null, user.id);
 });
