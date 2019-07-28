@@ -6,8 +6,6 @@ const passport = require('passport');
 const compression = require('compression');
 const helmet = require('helmet');
 
-const keys = require('./variables/keys');
-
 const authRoutes = require('./routes/auth');
 const actionsRoutes = require('./routes/actions');
 
@@ -38,9 +36,9 @@ app.use((error, req, res, next) => {
     res.status(status).json({ message: message, data: data });
 });
 
-mongoose.connect(keys.MONGO_URL)
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-8hu3a.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`)
     .then(result => {
-        const server = app.listen(3000);
+        app.listen(process.env.PORT || 3000);
     }).catch(err => {
         console.log(err);
     });

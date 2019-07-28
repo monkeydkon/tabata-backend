@@ -8,7 +8,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "NODE_ENV=production MONGO_USER=monkeydkon MONGO_PASSWORD=gamotonzaxa MONGO_DEFAULT_DATABASE=tabata GOOGLE_CLIENT_ID=918021882776-fu8hr3q5ld81t1dlv1pd8en7ht8hu3t6.apps.googleusercontent.com GOOGLE_CLIENT_SECRET=yyVXb1UunZ9j0mcpLx8FYz8f mnode app.js",
+    "start-server": "node app.js",
+    "start:dev": "nodemon app.js"
   },
   "author": "giorgos konsoulakis",
   "license": "ISC",
