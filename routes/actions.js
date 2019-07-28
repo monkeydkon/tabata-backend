@@ -8,7 +8,7 @@ const router = express.Router();
 
 const isAuth = require('../middleware/is-auth');
 
-router.get('/tabatas', isAuth, actionsController.getTabatas);
+router.get('/tabatas', isAuth.checkAuthentication, actionsController.getTabatas);
 
 router.post('/tabata', [
     body('name')
@@ -27,11 +27,11 @@ router.post('/tabata', [
         .isNumeric()
         .withMessage('Work must be a number')
 
-], isAuth, actionsController.postTabata);
+], isAuth.checkAuthentication, actionsController.postTabata);
 
-router.get('/tabata/:tabataId', isAuth, actionsController.getTabata);
+router.get('/tabata/:tabataId', isAuth.checkAuthentication, actionsController.getTabata);
 
-router.delete('/tabata/:tabataId', isAuth, actionsController.deleteTabata);
+router.delete('/tabata/:tabataId', isAuth.checkAuthentication, actionsController.deleteTabata);
 
 router.put('/tabata/:tabataId', [
     body('name')
@@ -50,6 +50,6 @@ router.put('/tabata/:tabataId', [
         .isNumeric()
         .withMessage('Work must be a number')
 
-], isAuth, actionsController.updateTabata);
+], isAuth.checkAuthentication, actionsController.updateTabata);
 
 module.exports = router;

@@ -2,13 +2,18 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const url = require('./variables/variables');
 const User = require('./models/user');
+const passportSetup = require('./passport/passport-setup');
+const passport = require('passport');
+
+const keys = require('./variables/keys');
 
 const authRoutes = require('./routes/auth');
 const actionsRoutes = require('./routes/actions');
 
 const app = express();
+
+app.use(passport.initialize());
 
 app.use(bodyParser.json());
 
@@ -18,11 +23,6 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
-
-
-app.use( passport.initialize());
-app.use( passport.session());
-
 
 app.use('/auth', authRoutes);
 app.use('/actions', actionsRoutes);
@@ -35,7 +35,7 @@ app.use((error, req, res, next) => {
     res.status(status).json({ message: message, data: data });
 });
 
-mongoose.connect(url)
+mongoose.connect(keys.MONGO_URL)
     .then(result => {
         const server = app.listen(3000);
     }).catch(err => {
