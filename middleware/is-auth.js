@@ -37,15 +37,15 @@ exports.checkTokenMW = (req, res, next) => {
 };
 
 // Verify Token validity and attach token data as request attribute
-exports.verifyToken = (req, res) => {
-    jwt.verify(req.token, 'secret', (err, authData) => {
-        if(err) {
-            res.sendStatus(403);
-        } else {
-            return req.authData = authData;
-        }
-    })
-};
+// exports.verifyToken = (req, res) => {
+//     jwt.verify(req.token, 'secret', (err, authData) => {
+//         if(err) {
+//             res.sendStatus(403);
+//         } else {
+//             return req.authData = authData;
+//         }
+//     })
+// };
 
 // Issue Token
 exports.signToken = (req, res) => {
@@ -53,7 +53,8 @@ exports.signToken = (req, res) => {
         if(err){
             res.sendStatus(500);
         } else {
-            res.json({token});
+            console.log(token);
+            res.status(200).json({token: token, message: "take your token bro"});
         }
     });
 };

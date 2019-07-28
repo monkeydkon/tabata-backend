@@ -47,13 +47,13 @@ router.get('/google/redirect',passport.authenticate('google'),(req,res) => {
     isAuth.signToken(req, res);
 });
 
-router.get('/verify',isAuth.checkTokenMW, (req, res) => {
-    isAuth.verifyToken(req, res);
-    if (null === req.authData) {
-        res.sendStatus(403);
-    } else {
-        res.json(req.authData);
-    }
-});
+// router.get('/verify',isAuth.checkTokenMW, (req, res) => {
+//     isAuth.verifyToken(req, res);
+//     if (null === req.authData) {
+//         res.sendStatus(403);
+//     } else {
+//         res.json(req.authData);
+//     }
+// });
 
 module.exports = router;

@@ -2,9 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const User = require('./models/user');
-const passportSetup = require('./passport/passport-setup');
 const passport = require('passport');
+const compression = require('compression');
+const helmet = require('helmet');
 
 const keys = require('./variables/keys');
 
@@ -12,6 +12,9 @@ const authRoutes = require('./routes/auth');
 const actionsRoutes = require('./routes/actions');
 
 const app = express();
+
+app.use(helmet());
+app.use(compression());
 
 app.use(passport.initialize());
 
