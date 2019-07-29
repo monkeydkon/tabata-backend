@@ -45,7 +45,7 @@ exports.signup = (req, res, next) => {
     if (!errors.isEmpty()) {
         const error = new Error('Validation failed');
         error.statusCode = 422;
-        errors.data = errors.array();
+        error.data = errors.array();
         throw error;
     }
     const email = req.body.email;

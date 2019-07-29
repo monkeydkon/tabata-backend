@@ -34,7 +34,10 @@ app.use((error, req, res, next) => {
     const status = error.statusCode || 500;
     const message = error.message;
     const data = error.data;
-    res.status(status).json({ message: message, data: data });
+    res.status(status).json({
+        message: message,
+        data: data
+    });
 });
 
 mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-8hu3a.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`)
