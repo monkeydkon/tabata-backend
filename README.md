@@ -13,4 +13,5 @@ add a nodemon.json on <b> root </b> folder
     }
 }
 ```
-and run ```npm install```
+run ```npm install```
+then run ```npm run start:dev```
