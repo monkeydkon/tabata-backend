@@ -16,7 +16,8 @@ const url = oauth2Client.generateAuthUrl({
 });
 
 
-exports.getGoogleAccountFromCode = async (code) => {
+exports.getGoogleAccountFromCode =  (req, res, next) => {
+    const code = req.body.code;
     res.status(200).json({code:code});
     // const { tokens } = await oauth2Client.getTokens(code);
     // oauth2Client.setCredentias(tokens);
