@@ -24,7 +24,7 @@ exports.checkAuthentication = (req, res, next) => {
     next();
 };
 
-// check if Token exists on request Header and attach token to request as attribute
+//check if Token exists on request Header and attach token to request as attribute
 // exports.checkTokenMW = (req, res, next) => {
 //     // Get auth header value
 //     const bearerHeader = req.get('Authorization');
@@ -36,7 +36,7 @@ exports.checkAuthentication = (req, res, next) => {
 //     }
 // };
 
-// Verify Token validity and attach token data as request attribute
+//Verify Token validity and attach token data as request attribute
 // exports.verifyToken = (req, res) => {
 //     jwt.verify(req.token, 'secret', (err, authData) => {
 //         if(err) {
@@ -47,7 +47,7 @@ exports.checkAuthentication = (req, res, next) => {
 //     })
 // };
 
-// Issue Token
+//Issue Token
 // exports.signToken = (req, res) => {
 //     jwt.sign({userId: req.user._id}, 'secret', {expiresIn:'5 min'}, (err, token) => {
 //         if(err){
