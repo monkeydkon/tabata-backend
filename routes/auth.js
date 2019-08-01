@@ -10,11 +10,6 @@ const googleController = require('../controllers/google');
 
 const router = express.Router();
 
-const isAuth = require('../middleware/is-auth');
-
-const passport = require('passport');
-
-
 router.put('/signup',
  [
     body('email')
@@ -39,23 +34,5 @@ authController.signup);
 router.post('/login', authController.login);
 
 router.post('/google', googleController.getGoogleAccountFromCode);
-
-// router.get('/google', passport.authenticate('google', {
-//     session: false,
-//     scope: ['profile', 'email']
-// }));
-
-// router.get('/google/redirect',passport.authenticate('google'),(req,res) => {
-//     isAuth.signToken(req, res);
-// });
-
-// router.get('/verify',isAuth.checkTokenMW, (req, res) => {
-//     isAuth.verifyToken(req, res);
-//     if (null === req.authData) {
-//         res.sendStatus(403);
-//     } else {
-//         res.json(req.authData);
-//     }
-// });
 
 module.exports = router;

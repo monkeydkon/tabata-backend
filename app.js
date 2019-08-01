@@ -2,8 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const passport = require('passport');
-require('./passport/passport-setup');
 const compression = require('compression');
 const helmet = require('helmet');
 
@@ -14,8 +12,6 @@ const app = express();
 
 app.use(helmet());
 app.use(compression());
-
-//  app.use(passport.initialize());
 
 app.use(bodyParser.json());
 
