@@ -11,8 +11,18 @@ const userSchema = new Schema({
     googleId: {
         type: String
     } ,
+    facebookId: {
+        type: String
+    },
+    provider: {
+        type: String
+    },
     username: {
         type: String
+    },
+    verified: {
+        type: Boolean,
+        default: false
     },
     tabatas: [
         {
