@@ -189,3 +189,52 @@ exports.resend = (req, res, next) => {
             next(err);
         });
 };
+
+exports.changePassword = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const error = new Error('Validation failed');
+        error.statusCode = 422;
+        error.data = errors.array();
+        throw error;
+    }
+    const oldPassword = req.body.oldPassword;
+    const newPassword = req.body.newPassword;
+    const userId = req.userId
+    let loadedUser;
+    User.findOne({_id: userId})
+        .then(user => {
+            if(!user){
+                const error = new Error('We were unable to find this user.');
+                error.statusCode = 400;
+                throw error;
+            }
+            loadedUser = user;
+            return bcrypt.hash(oldPassword,12);
+            
+        })
+        .then(hashedPassword => {
+            return bcrypt.compare(oldPassword, loadedUser.password);   
+        })
+        .then(isEqual => {
+            if(!isEqual){
+                const error = new Error('This is not your password. Please try again.');
+                error.statusCode = 401;
+                throw error;
+            }
+            return bcrypt.hash(newPassword,12);
+        })
+        .then(newHashedPassword => {
+            loadedUser.password = newHashedPassword;
+            return loadedUser.save();
+        })
+        .then(result => {
+            res.status(200).json({message: 'You changed the password successfully'});
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+};

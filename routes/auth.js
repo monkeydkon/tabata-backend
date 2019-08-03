@@ -9,6 +9,8 @@ const authController = require('../controllers/auth');
 const googleController = require('../controllers/google');
 const facebookController = require('../controllers/facebook');
 
+const isAuth = require('../middleware/is-auth');
+
 const router = express.Router();
 
 router.put('/signup',
@@ -33,6 +35,8 @@ router.put('/signup',
 authController.signup);
 
 router.post('/login', authController.login);
+
+router.post('/change', isAuth.checkAuthentication, authController.changePassword);
 
 router.post('/confirmation', [body('token').not().isEmpty().withMessage('The token cannot be an empty string')],authController.confirm);
 
