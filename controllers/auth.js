@@ -210,12 +210,11 @@ exports.changePassword = (req, res, next) => {
                 throw error;
             }
             loadedUser = user;
-            return bcrypt.hash(oldPassword,12);
-            
+            return bcrypt.compare(oldPassword, loadedUser.password); 
         })
-        .then(hashedPassword => {
-            return bcrypt.compare(oldPassword, loadedUser.password);   
-        })
+        // .then(hashedPassword => {
+              
+        // })
         .then(isEqual => {
             if(!isEqual){
                 const error = new Error('This is not your password. Please try again.');
