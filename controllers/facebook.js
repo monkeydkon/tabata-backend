@@ -25,5 +25,6 @@ exports.getFacebookAccountFromCode = (req, res, next) => {
     //     .catch(err => {
     //         console.log(err);
     //     });
+    console.log(req.body);
     res.json({body: req.body});
 };
