@@ -40,6 +40,8 @@ router.post('/resend',[body('email').isEmail().normalizeEmail().withMessage('Not
 
 router.post('/google', [body('code').not().isEmpty().withMessage('The code cannot be an empty string')],googleController.getGoogleAccountFromCode);
 
-router.post('/facebook', [body('code').not().isEmpty().withMessage('The code cannot be an empty string')],facebookController.getFacebookAccountFromCode);
+router.post('/facebook',
+// [body('code').not().isEmpty().withMessage('The code cannot be an empty string')],
+facebookController.getFacebookAccountFromCode);
 
 module.exports = router;
