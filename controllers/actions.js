@@ -173,5 +173,4 @@ exports.updateTabata = (req, res, next) => {
             }
             next(err);
         });
-
 };
