@@ -104,9 +104,6 @@ exports.deleteTabata = (req, res, next) => {
                 error.statusCode = 404;
                 throw error; 
             }
-            return user;
-        })
-        .then(user => {
             const tabata = user.tabatas.findIndex(tabata => tabata._id == tabataId);
              if(tabata == -1){
                 const error = new Error('Tabata doesnt exist');
@@ -153,9 +150,6 @@ exports.updateTabata = (req, res, next) => {
                 error.statusCode = 404;
                 throw error; 
             }
-            return user;
-        })
-        .then(user => {
             const tabata = user.tabatas.find(tabata => tabata._id == tabataId);
             if(!tabata){
                const error = new Error('Tabata doesnt exist');
