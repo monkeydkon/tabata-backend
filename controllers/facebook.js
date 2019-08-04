@@ -48,7 +48,7 @@ exports.getFacebookAccountFromCode = (req, res, next) => {
         // .then(result => {
         //     console.log(result);
         //     res.status(200).json({result:result});
-        // })
+         })
         .catch(err => {
             console.log(err);
         });
