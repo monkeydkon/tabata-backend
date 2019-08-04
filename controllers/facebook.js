@@ -24,14 +24,12 @@ exports.getFacebookAccountFromCode = (req, res, next) => {
         }
     })
         .then(result => {
-             console.log(result.data.access_token);
-             res.json({ data: result.data.access_token });
-            // return axios.get('graph.facebook.com/debug_token', {
-            //     params: {
-            //         input_token: result.data.access_token,
-            //         access_token: '880265009023386|SpxU0nDVJVepFZrRBVYnoVKcnwU'
-            //     }
-            // });
+            return axios.get('graph.facebook.com/debug_token', {
+                params: {
+                    input_token: result.data.access_token,
+                    access_token: '880265009023386|SpxU0nDVJVepFZrRBVYnoVKcnwU'
+                }
+            });
         })
         .then(result => {
             console.log(result);
