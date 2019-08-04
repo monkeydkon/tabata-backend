@@ -26,14 +26,15 @@ exports.getFacebookAccountFromCode = (req, res, next) => {
         .then(result => {
             return axios.get('graph.facebook.com/debug_token', {
                 params: {
-                    input_token: result.data.access_token,
-                    access_token: '880265009023386|SpxU0nDVJVepFZrRBVYnoVKcnwU'
+                    input_token: result.data.access_token
+                    //,
+                    //access_token: '880265009023386|SpxU0nDVJVepFZrRBVYnoVKcnwU'
                 }
             });
         })
         .then(result => {
             console.log(result);
-            res.status(200).json({ result: result });
+            res.status(200).json({result: result });
         })
         .catch(err => {
             console.log(err);
