@@ -32,8 +32,17 @@ exports.getFacebookAccountFromCode = (req, res, next) => {
             });
         })
         .then(result => {
+            const user_id = result.data.user_id;
+            const app_id = result.data.app_id
+            return axios.get(`https://graph.facebook.com/v4.0/${result.data.user_id}`,{
+                access_token: app_id
+            });
             console.log(result.data);
             res.status(200).json({result: result.data });
+        })
+        .then(result => {
+            console.log(result);
+            res.status(200).json({result:result});
         })
         .catch(err => {
             console.log(err);
