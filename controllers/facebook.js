@@ -13,6 +13,7 @@ exports.getFacebookAccountFromCode = (req, res, next) => {
     const code = req.body.code;
     const clientId = req.body.clientId;
     const redirectUri = req.body.redirectUri;
+    let access_token;
     axios.get('https://graph.facebook.com/v4.0/oauth/access_token', {
         params: {
             client_id: clientId,
@@ -22,6 +23,7 @@ exports.getFacebookAccountFromCode = (req, res, next) => {
         }
     })
         .then(result => {
+            access_token = result.data.access_token;
             return axios.get('https://graph.facebook.com/debug_token', {
                 params: {
                     input_token: result.data.access_token,
@@ -38,7 +40,12 @@ exports.getFacebookAccountFromCode = (req, res, next) => {
             // console.log(result.data.data.app_id);
             const user_id = result.data.data.user_id;
             const app_id = result.data.data.app_id
-            return axios.get(`https://graph.facebook.com/v4.0/${user_id}`);
+            return axios.get('https://graph.facebook.com/me', {
+                params: {
+                    fields: 'email',
+                    access_token: access_token
+                }
+            });
             console.log(result.data);
             res.status(200).json({result: result.data });
         })
