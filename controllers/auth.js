@@ -45,7 +45,7 @@ exports.login = (req, res, next) => {
             // if password is correct generate a JWT
             const token = jwt.sign({
                 email: loadedUser.email, userId: loadedUser._id.toString()
-            }, 'secret',
+            }, process.env.JWT_SECRET,
                 {
                     expiresIn: '1h'
                 });
@@ -255,7 +255,7 @@ exports.getReset = (req, res, next) => {
             return token.save();
         })
         .then(result => {
-            console.log(result.token);
+            //console.log(result.token);
             return transporter.sendMail({
                 to: email,
                 from: 'no-reply@tabata.com',
