@@ -27,35 +27,25 @@ exports.getFacebookAccountFromCode = (req, res, next) => {
             return axios.get('https://graph.facebook.com/debug_token', {
                 params: {
                     input_token: result.data.access_token,
-                    access_token: '880265009023386|SpxU0nDVJVepFZrRBVYnoVKcnwU'
+                    access_token: process.env.FACEBOOK_ADD_ID
                 }
             });
         })
         .then(result => {
-            // console.log(result.data);
-            // console.log(result.data.user_id);
-            // console.log(result.data.app_id);
-            // console.log(result.data.data);
-            // console.log(result.data.data.user_id);
-            // console.log(result.data.data.app_id);
-            const user_id = result.data.data.user_id;
-            const app_id = result.data.data.app_id
             return axios.get('https://graph.facebook.com/me', {
                 params: {
                     fields: 'email',
                     access_token: access_token
                 }
             });
-            console.log(result.data);
-            res.status(200).json({result: result.data });
         })
         .then(result => {
             console.log(result.data);
             res.status(200).json({result:result.data});
+            //todo PUT USER INTO DATABASE
          })
         .catch(err => {
             console.log(err);
         });
-    // console.log(req.body);
-    // res.json({body: req.body});
+
 };
