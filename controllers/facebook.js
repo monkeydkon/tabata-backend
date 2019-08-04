@@ -24,18 +24,18 @@ exports.getFacebookAccountFromCode = (req, res, next) => {
         }
     })
         .then(result => {
-            // console.log(result.data);
-            // res.json({ data: result.data })
-            return axios.get('graph.facebook.com/debug_token', {
-                params: {
-                    input_token: result.data.access_token,
-                    access_token: '880265009023386|SpxU0nDVJVepFZrRBVYnoVKcnwU'
-                }
-            })
+             console.log(result.data.access_token);
+             res.json({ data: result.data.access_token });
+            // return axios.get('graph.facebook.com/debug_token', {
+            //     params: {
+            //         input_token: result.data.access_token,
+            //         access_token: '880265009023386|SpxU0nDVJVepFZrRBVYnoVKcnwU'
+            //     }
+            // });
         })
         .then(result => {
             console.log(result);
-            res.status(200).json({result: result});
+            res.status(200).json({ result: result });
         })
         .catch(err => {
             console.log(err);
