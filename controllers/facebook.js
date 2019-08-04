@@ -1,6 +1,7 @@
 const axios = require('axios');
 const { validationResult } = require('express-validator/check');
-
+const User = require('../models/user');
+const jwt = require('jsonwebtoken');
 
 exports.getFacebookAccountFromCode = (req, res, next) => {
     const errors = validationResult(req);
@@ -14,6 +15,8 @@ exports.getFacebookAccountFromCode = (req, res, next) => {
     const clientId = req.body.clientId;
     const redirectUri = req.body.redirectUri;
     let access_token;
+    let facebookId;
+    let email;
     axios.get('https://graph.facebook.com/v4.0/oauth/access_token', {
         params: {
             client_id: clientId,
@@ -40,12 +43,34 @@ exports.getFacebookAccountFromCode = (req, res, next) => {
             });
         })
         .then(result => {
-            console.log(result.data);
-            res.status(200).json({result:result.data});
+            // console.log(result.data);
+            // res.status(200).json({result:result.data});
+            facebookId = result.data.id;
+            email = result.data.email;
+            return User.findOne({ facebookId: result.data.id });
+
             //todo PUT USER INTO DATABASE
-         })
+        })
+        .then(user => {
+            if (!user) {
+                const newUser = new User({
+                    facebookId: facebookId,
+                    email: email,
+                    provider: 'facebook'
+                })
+                return user.save();
+            }
+        })
+        .then(user => {
+            const token = jwt.sign({
+                email: email, userId: user._id.toString()
+            }, process.env.JWT_SECRET,
+                {
+                    expiresIn: '1h'
+                });
+            res.status(200).json({ token: token, userId: user._id.toString() });
+        })
         .catch(err => {
             console.log(err);
         });
-
 };
