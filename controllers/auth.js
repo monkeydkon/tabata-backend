@@ -212,9 +212,6 @@ exports.changePassword = (req, res, next) => {
             loadedUser = user;
             return bcrypt.compare(oldPassword, loadedUser.password); 
         })
-        // .then(hashedPassword => {
-              
-        // })
         .then(isEqual => {
             if(!isEqual){
                 const error = new Error('This is not your password. Please try again.');
@@ -229,6 +226,95 @@ exports.changePassword = (req, res, next) => {
         })
         .then(result => {
             res.status(200).json({message: 'You changed the password successfully'});
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+};
+
+exports.getReset = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const error = new Error('Validation failed');
+        error.statusCode = 422;
+        error.data = errors.array();
+        throw error;
+    }
+    const email = req.body.email;
+    User.findOne({email: email})
+        .then(user => {
+            if(!user){
+                const error = new Error('We were unable to find this user.');
+                error.statusCode = 400;
+                throw error;
+            }
+            const token = new Token({ userId: user._id, token: crypto.randomBytes(18).toString('hex') });
+            return token.save();
+        })
+        .then(result => {
+            console.log(result.token);
+            return transporter.sendMail({
+                to: email,
+                from: 'no-reply@tabata.com',
+                subject: 'Reset your password',
+                html: '<h1>To set a new password, please click on this link: \nhttp:\/\/' + 'localhost:3000' + '\/auth/reset\/' + result.token + '.\n </h1>'
+            });
+        })
+        .then(result => {
+            res.status(200).json({message: 'Reset email was sent to the email of the user.'});
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+};
+
+exports.postReset = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const error = new Error('Validation failed');
+        error.statusCode = 422;
+        error.data = errors.array();
+        throw error;
+    }
+    const token = req.params.token;
+    const password = req.body.password;
+    let loadedToken;
+    let loadedUser;
+    Token.findOne({token: token})
+        .then(token => {
+            if(!token){
+                const error = new Error('There is no such token. Maybe it expired. Please try again.')
+                error.statusCode = 401;
+                throw error;
+            }
+            loadedToken = token;
+            const userId = loadedToken.userId;
+            return User.findById(userId);
+        })
+        .then(user => {
+            if(!user){
+                const error = new Error('There is no such user.')
+                error.statusCode = 401;
+                throw error;
+            }
+            loadedUser = user;
+            return bcrypt.hash(password,12);
+        })
+        .then(hashedPassword => {
+            loadedUser.password = hashedPassword;
+            return loadedUser.save();
+        })
+        .then(result => {
+            return Token.findOneAndDelete({token: loadedToken.token});
+        })
+        .then(result => {
+            res.status(200).json({message: 'User changed password successfully'});
         })
         .catch(err => {
             if (!err.statusCode) {
