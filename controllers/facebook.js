@@ -50,8 +50,8 @@ exports.getFacebookAccountFromCode = (req, res, next) => {
             res.status(200).json({result: result.data });
         })
         .then(result => {
-            console.log(result);
-            res.status(200).json({result:result});
+            console.log(result.data);
+            res.status(200).json({result:result.data});
          })
         .catch(err => {
             console.log(err);
