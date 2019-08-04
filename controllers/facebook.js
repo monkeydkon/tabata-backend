@@ -32,20 +32,20 @@ exports.getFacebookAccountFromCode = (req, res, next) => {
             });
         })
         .then(result => {
-            console.log(result.data);
-            console.log(result.data.user_id);
-            console.log(result.data.app_id);
-            console.log(result.data.data);
-            console.log(result.data.data.user_id);
-            console.log(result.data.data.app_id);
-            // const user_id = result.data.data.user_id;
-            // const app_id = result.data.data.app_id
-            // return axios.get(`https://graph.facebook.com/${user_id}`,{
-            //     params: {
-            //         access_token: app_id
-            //     }
-            // });
             // console.log(result.data);
+            // console.log(result.data.user_id);
+            // console.log(result.data.app_id);
+            // console.log(result.data.data);
+            // console.log(result.data.data.user_id);
+            // console.log(result.data.data.app_id);
+            const user_id = result.data.data.user_id;
+            const app_id = result.data.data.app_id
+            return axios.get(`https://graph.facebook.com/${user_id}`,{
+                params: {
+                    access_token: app_id
+                }
+            });
+            console.log(result.data);
             res.status(200).json({result: result.data });
         })
         .then(result => {
