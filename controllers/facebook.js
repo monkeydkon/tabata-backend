@@ -1,5 +1,3 @@
-// const {FB, FacebookApiException} = require('fb');
-// const fb = new Facebook(options);
 const axios = require('axios');
 const { validationResult } = require('express-validator/check');
 
@@ -40,11 +38,7 @@ exports.getFacebookAccountFromCode = (req, res, next) => {
             // console.log(result.data.data.app_id);
             const user_id = result.data.data.user_id;
             const app_id = result.data.data.app_id
-            return axios.get(`https://graph.facebook.com/v4.0/${user_id}`,{
-                params: {
-                    access_token: app_id
-                }
-            });
+            return axios.get(`https://graph.facebook.com/v4.0/${user_id}`);
             console.log(result.data);
             res.status(200).json({result: result.data });
         })
