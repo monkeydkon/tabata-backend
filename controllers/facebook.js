@@ -35,7 +35,9 @@ exports.getFacebookAccountFromCode = (req, res, next) => {
             const user_id = result.data.user_id;
             const app_id = result.data.app_id
             return axios.get(`https://graph.facebook.com/v4.0/${user_id}`,{
-                access_token: app_id
+                params: {
+                    access_token: app_id
+                }
             });
             console.log(result.data);
             res.status(200).json({result: result.data });
