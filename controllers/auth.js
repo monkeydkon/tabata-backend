@@ -101,6 +101,32 @@ exports.signup = (req, res, next) => {
         });
 };
 
+exports.getCheckEmail = (req, res, next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        const error = new Error('Validation failed');
+        error.statusCode = 422;
+        error.data = errors.array();
+        throw error;
+    }
+    const email = req.body.email;
+    User.findOne({email: email})
+        .then(user => {
+            if(user){
+                const error = new Error('This email is already being used');
+                error.statusCode = 409;
+                throw error;
+            }
+            res.status(200).json({message: 'Email is available'});
+        })
+        .catch(err => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
+};
+
 exports.confirm = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

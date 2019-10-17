@@ -36,6 +36,8 @@ authController.signup);
 
 router.post('/login', authController.login);
 
+router.get('/checkemail', [body('email').isEmail().normalizeEmail().withMessage('Not a valid email')], authController.getCheckEmail);
+
 router.post('/change', [body('newPassword').trim().isLength({min: 5}).withMessage('Password must be at least 5 characters')],isAuth.checkAuthentication, authController.changePassword);
 
 router.post('/confirmation', [body('token').not().isEmpty().withMessage('The token cannot be an empty string')],authController.confirm);
