@@ -1,6 +1,6 @@
 # tabata-backend
 RESTful-API for a tabata web application
-# todo:
+# How to use:
 add a nodemon.json on <b> root </b> folder
 ```json
 {
