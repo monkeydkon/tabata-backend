@@ -45,7 +45,7 @@ exports.login = (req, res, next) => {
             }
             // if password is correct generate a JWT
             const token = jwt.sign({
-                exp: 5000,
+                exp: 1000 * 60 * 60 * 24,
                 data: {
                     email: loadedUser.email,
                     userId: loadedUser._id.toString()

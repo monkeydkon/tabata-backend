@@ -32,6 +32,7 @@ exports.getTabata = (req, res, next) => {
 
 exports.getTabatas = (req, res, next) => {
     const userId = req.userId;
+    console.log(userId);
     User.findById(userId)
         .then(user => {
             if (!user) {

@@ -20,6 +20,8 @@ exports.checkAuthentication = (req, res, next) => {
         error.statusCode = 401;
         throw error;
     }
-    req.userId = decodedToken.userId;
+    req.userId = decodedToken.data.userId;
+    console.log(decodedToken,'token');
+    console.log(req.userId,"a0x0aa0axa0xx0xa0");
     next();
 };
