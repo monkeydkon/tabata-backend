@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const compression = require('compression');
 const helmet = require('helmet');
-
 const authRoutes = require('./routes/auth');
 const actionsRoutes = require('./routes/actions');
 
