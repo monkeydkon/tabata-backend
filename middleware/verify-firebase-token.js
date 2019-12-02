@@ -1,7 +1,7 @@
 const admin = require('firebase-admin');
 
 exports.verify = (req, res, next) => {
-    const token = req.body.token;
+  //  const token = req.body.token;
 
     const authHeader = req.get('Authorization');
     if (!authHeader) {
@@ -9,7 +9,7 @@ exports.verify = (req, res, next) => {
         error.statusCode = 401;
         throw error;
     }
-    // const token = authHeader.split(' ')[1];
+    const token = authHeader.split(' ')[1];
     // idToken comes from the client app
     let actualtoken;
     admin.auth().verifyIdToken(token)
