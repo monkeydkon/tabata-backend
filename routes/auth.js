@@ -16,7 +16,7 @@ const router = express.Router();
 
 router.post('/register', verifyFirebaseToken.verify, authController.register);
 
-router.post('/updateUserData', verifyFirebaseToken.verify, authController.setProfile);
+router.post('/setProfile', verifyFirebaseToken.verify, authController.setProfile);
 
 router.put('/signup',
  [
