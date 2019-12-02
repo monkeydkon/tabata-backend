@@ -69,6 +69,30 @@ exports.login = (req, res, next) => {
         })
 };
 
+exports.register = (req, res, next) => {
+    console.log('got into register');
+    console.log(req.userId)
+}
+
+exports.setProfile = (req, res, next) => {
+    // User.findOne({ _id: userId })
+    //     .then(user => {
+    //         if (!user) {
+    //             const error = new Error('no such user');
+    //             error.statusCode = 409;
+    //             throw error;
+    //         }
+            
+    //     })
+    //     .catch(err => {
+    //         if (!err.statusCode) {
+    //             err.statusCode = 500;
+    //         }
+    //         next(err);
+    //     });
+    res.json({userId: req.userId})
+}
+
 exports.refreshToken = (req, res, next) => {
 
 }

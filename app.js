@@ -6,6 +6,13 @@ const helmet = require('helmet');
 const authRoutes = require('./routes/auth');
 const actionsRoutes = require('./routes/actions');
 
+const serviceAccount = require("./firebase-config.json");
+const admin = require('firebase-admin');
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+});
+
 const app = express();
 
 app.use(helmet());
@@ -40,3 +47,4 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PA
     }).catch(err => {
         console.log(err);
     });
+

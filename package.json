@@ -24,6 +24,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.1.1",
     "fb": "^2.0.0",
+    "firebase-admin": "^8.8.0",
     "googleapis": "^41.0.1",
     "helmet": "^3.20.0",
     "jsonwebtoken": "^8.5.1",

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 
+
 exports.checkAuthentication = (req, res, next) => {
     const authHeader = req.get('Authorization');
     if(!authHeader){

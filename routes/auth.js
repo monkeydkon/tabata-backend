@@ -10,8 +10,13 @@ const googleController = require('../controllers/google');
 const facebookController = require('../controllers/facebook');
 
 const isAuth = require('../middleware/is-auth');
+const verifyFirebaseToken = require('../middleware/verify-firebase-token');
 
 const router = express.Router();
+
+router.post('/register', verifyFirebaseToken.verify, authController.register);
+
+router.post('/updateUserData', verifyFirebaseToken.verify, authController.setProfile);
 
 router.put('/signup',
  [
