@@ -21,8 +21,6 @@ exports.verify = (req, res, next) => {
             }
             actualtoken = decodedToken;
             req.userId = actualtoken.uid;
-            console.log(actualtoken, 'token');
-            console.log(req.userId, "a0x0aa0axa0xx0xa0");
             next();
         }).catch(err => {
             err.statusCode = 500;

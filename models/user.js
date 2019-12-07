@@ -2,24 +2,27 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+    _id: {
+        type: String
+    },
     email: {
         type: String
     },
-    password: {
-        type: String
-    },
-    googleId: {
-        type: String
-    },
-    facebookId: {
-        type: String
-    },
-    provider: {
-        type: String
-    },
-    username: {
-        type: String
-    },
+    // password: {
+    //     type: String
+    // },
+    // googleId: {
+    //     type: String
+    // },
+    // facebookId: {
+    //     type: String
+    // },
+    // provider: {
+    //     type: String
+    // },
+    // username: {
+    //     type: String
+    // },
     verified: {
         type: Boolean,
         default: false

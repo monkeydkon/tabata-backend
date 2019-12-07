@@ -2,61 +2,63 @@ const express = require('express');
 
 const { body } = require('express-validator/check');
 
-const User = require('../models/user');
+// const User = require('../models/user');
 
 const authController = require('../controllers/auth');
 
-const googleController = require('../controllers/google');
-const facebookController = require('../controllers/facebook');
+// const googleController = require('../controllers/google');
+// const facebookController = require('../controllers/facebook');
 
-const isAuth = require('../middleware/is-auth');
+// const isAuth = require('../middleware/is-auth');
 const verifyFirebaseToken = require('../middleware/verify-firebase-token');
 
 const router = express.Router();
 
-router.post('/register', verifyFirebaseToken.verify, authController.register);
+// router.post('/register', verifyFirebaseToken.verify, authController.register);
 
-router.post('/setProfile', verifyFirebaseToken.verify, authController.setProfile);
+router.post('/setOrUpdateUserData', verifyFirebaseToken.verify, authController.setOrUpdateUserData);
 
-router.put('/signup',
- [
-    body('email')
-        .isEmail()
-        .withMessage('Please enter a valid e-mail')
-        .custom((value, { req }) => {
-            return User.findOne({email: value})
-                .then(userDoc => {
-                    if (userDoc){
-                        return Promise.reject('This e-mail adress is already being used');
-                    }
-                })
-        })
-        .normalizeEmail(),
-    body('password')
-        .trim()
-        .isLength({min: 5})
-        .withMessage('Password must be at least 5 charactes')
-], 
-authController.signup);
+router.get('/userData', verifyFirebaseToken.verify, authController.getUserData);
 
-router.post('/login', authController.login);
+// router.put('/signup',
+//  [
+//     body('email')
+//         .isEmail()
+//         .withMessage('Please enter a valid e-mail')
+//         .custom((value, { req }) => {
+//             return User.findOne({email: value})
+//                 .then(userDoc => {
+//                     if (userDoc){
+//                         return Promise.reject('This e-mail adress is already being used');
+//                     }
+//                 })
+//         })
+//         .normalizeEmail(),
+//     body('password')
+//         .trim()
+//         .isLength({min: 5})
+//         .withMessage('Password must be at least 5 charactes')
+// ], 
+// authController.signup);
 
-router.get('/checkemail', [body('email').isEmail().normalizeEmail().withMessage('Not a valid email')], authController.getCheckEmail);
+// router.post('/login', authController.login);
 
-router.post('/change', [body('newPassword').trim().isLength({min: 5}).withMessage('Password must be at least 5 characters')],isAuth.checkAuthentication, authController.changePassword);
+// router.get('/checkemail', [body('email').isEmail().normalizeEmail().withMessage('Not a valid email')], authController.getCheckEmail);
 
-router.post('/confirmation', [body('token').not().isEmpty().withMessage('The token cannot be an empty string')],authController.confirm);
+// router.post('/change', [body('newPassword').trim().isLength({min: 5}).withMessage('Password must be at least 5 characters')],isAuth.checkAuthentication, authController.changePassword);
 
-router.post('/resend',[body('email').isEmail().normalizeEmail().withMessage('Not a valid email')], authController.resend);
+// router.post('/confirmation', [body('token').not().isEmpty().withMessage('The token cannot be an empty string')],authController.confirm);
 
-router.post('/reset', [body('email').isEmail().normalizeEmail().withMessage('Not a valid email')],authController.reset);
+// router.post('/resend',[body('email').isEmail().normalizeEmail().withMessage('Not a valid email')], authController.resend);
 
-router.post('/post-reset', [body('password').trim().isLength({min: 5}).withMessage('Password must be at least 5 characters')],authController.postReset);
+// router.post('/reset', [body('email').isEmail().normalizeEmail().withMessage('Not a valid email')],authController.reset);
 
-router.post('/google', [body('code').not().isEmpty().withMessage('The code cannot be an empty string')],googleController.getGoogleAccountFromCode);
+// router.post('/post-reset', [body('password').trim().isLength({min: 5}).withMessage('Password must be at least 5 characters')],authController.postReset);
 
-router.post('/facebook',
-// [body('code').not().isEmpty().withMessage('The code cannot be an empty string')],
-facebookController.getFacebookAccountFromCode);
+// router.post('/google', [body('code').not().isEmpty().withMessage('The code cannot be an empty string')],googleController.getGoogleAccountFromCode);
+
+// router.post('/facebook',
+// // [body('code').not().isEmpty().withMessage('The code cannot be an empty string')],
+// facebookController.getFacebookAccountFromCode);
 
 module.exports = router;

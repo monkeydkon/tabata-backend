@@ -1,14 +1,10 @@
 const express = require('express');
-
 const actionsController = require('../controllers/actions');
-
 const { body } = require('express-validator/check');
-
 const router = express.Router();
+const verifyFirebaseToken = require('../middleware/verify-firebase-token');
 
-const isAuth = require('../middleware/is-auth');
-
-router.get('/tabatas', isAuth.checkAuthentication, actionsController.getTabatas);
+router.get('/tabatas', verifyFirebaseToken.verify, actionsController.getTabatas);
 
 router.post('/tabata', [
     body('name')
@@ -27,11 +23,11 @@ router.post('/tabata', [
         .isNumeric()
         .withMessage('Work must be a number')
 
-], isAuth.checkAuthentication, actionsController.postTabata);
+], verifyFirebaseToken.verify, actionsController.postTabata);
 
-router.get('/tabata/:tabataId', isAuth.checkAuthentication, actionsController.getTabata);
+router.get('/tabata/:tabataId', verifyFirebaseToken.verify, actionsController.getTabata);
 
-router.delete('/tabata/:tabataId', isAuth.checkAuthentication, actionsController.deleteTabata);
+router.delete('/tabata/:tabataId', verifyFirebaseToken.verify, actionsController.deleteTabata);
 
 router.put('/tabata/:tabataId', [
     body('name')
@@ -50,6 +46,6 @@ router.put('/tabata/:tabataId', [
         .isNumeric()
         .withMessage('Work must be a number')
 
-], isAuth.checkAuthentication, actionsController.updateTabata);
+], verifyFirebaseToken.verify, actionsController.updateTabata);
 
 module.exports = router;
