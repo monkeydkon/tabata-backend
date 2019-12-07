@@ -20,6 +20,7 @@ router.post('/setOrUpdateUserData', verifyFirebaseToken.verify, authController.s
 
 router.get('/userData', verifyFirebaseToken.verify, authController.getUserData);
 
+
 // router.put('/signup',
 //  [
 //     body('email')
