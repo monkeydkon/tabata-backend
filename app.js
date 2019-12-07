@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const authRoutes = require('./routes/auth');
 const actionsRoutes = require('./routes/actions');
 
-const serviceAccount = require("./firebase-config.json");
+const serviceAccount = require("./firebase-config.js");
 const admin = require('firebase-admin');
 
 admin.initializeApp({
